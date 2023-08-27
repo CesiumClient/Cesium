@@ -8,6 +8,8 @@ import java.util.Map;
 public class cfg {
     public ConfigEntry<String> WindowTitle = ConfigEntry.create("Cesium Client");
     public ConfigEntry<Boolean> ShowTitleModdedStatus = ConfigEntry.create(false);
+    public ConfigEntry<Boolean> ShowHUDIcon = ConfigEntry.create(true);
+    public ConfigEntry<Double> CesiumHUDIconSize = ConfigEntry.create(1.0);
     //config
 //    public  String Prefix = ".";
 //    public  int DecimalColorMain = 2006271;

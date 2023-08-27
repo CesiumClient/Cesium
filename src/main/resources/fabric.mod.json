@@ -10,7 +10,7 @@
     "dupertrooper"
   ],
   "contact": {
-    "repo": "https://github.com/Joe/Cesium"
+    "repo": "https://github.com/CesiumClient/Cesium"
   },
   "license": "GPL-3.0",
   "icon": "assets/cesium/icon.png",
