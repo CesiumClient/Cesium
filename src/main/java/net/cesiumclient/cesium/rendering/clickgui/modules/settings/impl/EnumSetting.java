@@ -5,7 +5,8 @@ import net.cesiumclient.cesium.rendering.clickgui.modules.settings.Setting;
 import java.util.List;
 
 public class EnumSetting<T> extends Setting<List<T>> {
-    public T selectedOption;
+    public boolean showOptions = false;
+    public Object selectedOption;
     public EnumSetting(String name, List<T> value, List<T> default_value) {
         super(name, value, default_value);
         if(value.size() > 0)

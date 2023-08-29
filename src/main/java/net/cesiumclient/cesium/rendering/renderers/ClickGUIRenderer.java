@@ -109,6 +109,40 @@ public class ClickGUIRenderer {
 
         Renderer2d.renderQuad(stack, new Color(50, 50, 50), x + 3, y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2), x2 - 3, y + ((generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : ""))) / 2) + 11);
         generic.drawString(stack, (String) (setting.selectedOption != null ? setting.selectedOption : ""), x + 4, y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2) + 1, 1, 1, 1, 1);
+        Renderer2d.renderLine(stack, new Color(150, 150, 150),x2 - 5 - generic.getStringWidth(">"),y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2),x2 - 5 - generic.getStringWidth(">"),y + ((generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : ""))) / 2) + 11);
+        generic.drawString(stack, ">", x2-4 - generic.getStringWidth(">"), y + (generic.getStringHeight(">") / 2) + 1, 1, 1, 1, 1);
+        
+        int height = 0;
+        int height1 = 0;
+        if(setting.showOptions){
+            for(Object option : setting.value){
+                String strVal = String.valueOf(option);
+                height1 += generic.getStringHeight(strVal) + 2;
+            }
+            Renderer2d.renderQuad(stack,new Color(20,20,20),x2,y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2),x2 + 100,y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2) + height1);
+
+            for(Object option : setting.value){
+                String strVal = String.valueOf(option);
+                generic.drawString(stack,strVal,x2 + 3,y + (generic.getStringHeight(strVal) / 2) + height + 1,1,1,1,1);
+
+                if(leftClick && ScreenUtils.isMouseOver(mouseX,mouseY,x2,x2 + 100,y + height,y + height + generic.getStringHeight(strVal) + 2)){
+                    setting.selectedOption = option;
+                    setting.showOptions = false; // this should already be called but whatever
+                }
+
+                height += generic.getStringHeight(strVal) + 2;
+
+
+                if(option!=setting.value.get(setting.value.size() - 1))
+                    Renderer2d.renderLine(stack, new Color(65, 65, 65), x2 + 5, y + (generic.getStringHeight(strVal) / 2) + height - 1, x2 + 96, y + (generic.getStringHeight(strVal) / 2) + height - 1);
+            }
+        }
+
+        if(leftClick && ScreenUtils.isMouseOver(mouseX,mouseY,x2 - 5 - generic.getStringWidth(">"),x2, y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2),y + ((generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : ""))) / 2) + 11)){
+            setting.showOptions = !setting.showOptions;
+        } else if(leftClick && !ScreenUtils.isMouseOver(mouseX,mouseY,x2 - 5 - generic.getStringWidth(">"),x2, y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2),y + ((generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : ""))) / 2) + 11)){
+            setting.showOptions = false;
+        }
     }
 
     public static void render(DrawContext context, int mouseX, int mouseY,boolean leftClicked, boolean rightClicked,int keyCode, int scanCode, int modifiers){
