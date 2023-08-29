@@ -9,17 +9,17 @@ import java.net.URISyntaxException;
 
 public class FontManager {
     public static Font Minecraftia;
-    public static Font Minecraftia10px;
+    public static Font OpenSansRegular;
+    public static Font OpenSansBold;
+    public static Font OpenSansExtraBold;
 
     static {
         try {
-            Minecraftia = Font.createFont(Font.TRUETYPE_FONT,new File(Cesium.getClazz().getResource("/assets/cesium/Minecraftia-Regular.ttf").toURI()));
-            Minecraftia10px = Minecraftia.deriveFont(10);
-        } catch (FontFormatException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
+            Minecraftia = Font.createFont(Font.TRUETYPE_FONT,new File(Cesium.getClazz().getResource("/assets/cesium/fonts/Minecraftia-Regular.ttf").toURI()));
+            OpenSansRegular = Font.createFont(Font.TRUETYPE_FONT,new File(Cesium.getClazz().getResource("/assets/cesium/fonts/OpenSans-Regular.ttf").toURI()));
+            OpenSansBold = Font.createFont(Font.TRUETYPE_FONT,new File(Cesium.getClazz().getResource("/assets/cesium/fonts/OpenSans-SemiBold.ttf").toURI()));
+            OpenSansExtraBold = Font.createFont(Font.TRUETYPE_FONT,new File(Cesium.getClazz().getResource("/assets/cesium/fonts/OpenSans-ExtraBold.ttf").toURI()));
+        } catch (FontFormatException | IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }

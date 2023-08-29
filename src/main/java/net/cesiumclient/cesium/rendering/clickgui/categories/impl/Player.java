@@ -8,6 +8,8 @@ import java.util.List;
 public class Player extends Category {
     public Player() {
         super("Player", List.of(
+                new TestModule(),
+                new TestModule(),
                 new TestModule()
         ));
     }

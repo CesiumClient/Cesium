@@ -11,9 +11,13 @@ import java.util.List;
 public abstract class Category {
     @Getter
     private String title;
+    public boolean initialize = true;
+    public boolean dragging = true;
 
     @Getter
     private List<Module> modules;
+
+    public boolean collapsed = false;
 
     public int x1 = 0;
     public int x2 = 0;

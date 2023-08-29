@@ -1,7 +1,9 @@
 package net.cesiumclient.cesium.rendering.renderers;
 
 import me.x150.renderer.font.FontRenderer;
+import me.x150.renderer.render.Renderer2d;
 import net.cesiumclient.cesium.Cesium;
+import net.cesiumclient.cesium.rendering.clickgui.modules.settings.Setting;
 import net.cesiumclient.cesium.rendering.texture.TextureManager;
 import net.cesiumclient.cesium.utils.ScreenUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -12,6 +14,7 @@ public class CesiumIconRenderer {
     public static int getHeight(DrawContext context){
         return ScreenUtils.getScaledIconSize(context,Cesium.getConfig().cfg().CesiumHUDIconSize.getValue() / 20);
     }
+
     public static void render(DrawContext context){
         // icon
         context.setShaderColor(1.0f, 1.0f, 1.0f, .5f);

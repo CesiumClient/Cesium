@@ -13,11 +13,17 @@ public abstract class Module {
     private String name;
     @Getter
     private List<Setting> settings;
-
+    public boolean isExpanded;
+    @Getter
+    public BoolSetting enabled;
+    public void onEnable(){}
+    public void onDisable(){}
     public Module(String name, List<Setting> settings){
         this.name = name;
-        List<Setting> b = new ArrayList<Setting>(settings);
-        b.add(new BoolSetting("Enabled",false));
+        List<Setting> b = new ArrayList<>(settings);
+        BoolSetting set = new BoolSetting("Enabled",false);
+        b.add(set);
+        enabled = set;
         this.settings = b;
     }
 }
