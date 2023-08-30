@@ -1,6 +1,7 @@
 package net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl;
 
 import net.cesiumclient.cesium.rendering.clickgui.modules.settings.Setting;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 public class SliderSetting extends Setting<Double> {
     public final double minRange;
@@ -20,5 +21,10 @@ public class SliderSetting extends Setting<Double> {
         super(name, value, value);
         this.minRange = -50;//minRange;
         this.maxRange = 50;//maxRange;
+    }
+    @Override
+    public void reset(){
+        sliderPosition = 0;
+        fakeSliderPosition = 0;
     }
 }

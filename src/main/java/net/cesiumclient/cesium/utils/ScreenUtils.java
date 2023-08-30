@@ -13,10 +13,10 @@ public class ScreenUtils {
         return (mouseX > x1 && mouseX < x2) && (mouseY > y1 && mouseY < y2);
     }
     public static boolean isMouseOver(int mouseX, int mouseY, float x1, float x2, float y1, float y2){
-        x1 = (int) x1 + 0.5f;
-        x2 = (int) x2 + 0.5f;
-        y1 = (int) y1 + 0.5f;
-        y2 = (int) y2 + 0.5f;
+//        x1 = (int) x1 + 0.5f;
+//        x2 = (int) x2 + 0.5f;
+//        y1 = (int) y1 + 0.5f;
+//        y2 = (int) y2 + 0.5f;
 
         return (mouseX > x1 && mouseX < x2) && (mouseY > y1 && mouseY < y2);
     }

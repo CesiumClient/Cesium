@@ -6,6 +6,8 @@
   "mixins": [
   ],
   "client": [
+    "ExplosionMixin",
+    "TntEntityRendererMixin",
     "ParentElementMixin",
     "InGameHudMixin",
     "MinecraftClientMixin",

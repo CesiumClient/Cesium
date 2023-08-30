@@ -1,5 +1,7 @@
 package net.cesiumclient.cesium.rendering.renderers;
 
+import com.mojang.datafixers.kinds.Const;
+import io.netty.util.Constant;
 import me.x150.renderer.font.FontRenderer;
 import me.x150.renderer.render.Renderer2d;
 import me.x150.renderer.util.RendererUtils;
@@ -8,10 +10,7 @@ import net.cesiumclient.cesium.registries.CategoryRegistry;
 import net.cesiumclient.cesium.rendering.clickgui.categories.Category;
 import net.cesiumclient.cesium.rendering.clickgui.modules.Module;
 import net.cesiumclient.cesium.rendering.clickgui.modules.settings.Setting;
-import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.BoolSetting;
-import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.EnumSetting;
-import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.SliderSetting;
-import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.StringSetting;
+import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.*;
 import net.cesiumclient.cesium.rendering.fonts.FontManager;
 import net.cesiumclient.cesium.utils.ColorUtils;
 import net.cesiumclient.cesium.utils.Constants;
@@ -47,6 +46,32 @@ public class ClickGUIRenderer {
         generic.drawString(stack,setting.name,(x + size + (size / 2.0f) + 2f),y - (generic.getStringHeight(setting.name) / 2),1,1,1,1);
     }
     static void renderStringSetting(MatrixStack stack, int x, int y, int x2, StringSetting setting, int mouseX, int mouseY, boolean leftClicked){
+//        generic.drawString(stack,setting.name,x + 3,y - generic.getStringHeight(setting.name),1,1,1,1);// + (generic.getStringHeight(setting.name) / 2),1,1,1,1);
+//        Color c = setting.selected ? new Color(65, 65, 65) : new Color(50,50,50);
+//        Renderer2d.renderQuad(stack,c,x + 3,y - (generic.getStringHeight(setting.name) * 1),x2 - 3,y - (generic.getStringHeight(setting.name) * 1) + 11);
+//        generic.drawString(stack,setting.value,x + 4,y - (generic.getStringHeight(setting.value)) + 6,1,1,1,1);
+
+        generic.drawString(stack, setting.name, x + 3, y - generic.getStringHeight(setting.name) / 2, 1, 1, 1, 1);
+
+
+        Color c = setting.selected ? new Color(85, 85, 85) : new Color(50, 50, 50);
+        Renderer2d.renderQuad(stack, c, x + 3, y + (generic.getStringHeight(setting.name) / 2), x2 - 3, y + (generic.getStringHeight(setting.name) / 2) + 11);
+
+
+        if(leftClicked && ScreenUtils.isMouseOver(mouseX,mouseY,x+3,x2-3,y + (generic.getStringHeight(setting.name) / 2),y + (generic.getStringHeight(setting.name) / 2) + 11)){
+            setting.selected = true;
+        } else if (leftClicked && !ScreenUtils.isMouseOver(mouseX,mouseY,x+3,x2-3,y + (generic.getStringHeight(setting.name) / 2),y + (generic.getStringHeight(setting.name) / 2) + 11)){
+            setting.selected = false;
+        }
+
+        if(generic.getStringWidth(setting.value) >= ((x2 - 3) - (x + 3)) - generic.getStringWidth("...")){
+            generic.drawString(stack, setting.lastSafeDisplayString + "...", x + 4, y + (generic.getStringHeight(setting.value) / 2) + 1, 1, 1, 1, 1);
+        } else{
+            setting.lastSafeDisplayString = setting.value;
+            generic.drawString(stack, setting.value, x + 4, y + (generic.getStringHeight(setting.value) / 2) + 1, 1, 1, 1, 1);
+        }
+    }
+    static void renderLimitedStringSetting(MatrixStack stack, int x, int y, int x2, LimitedStringSetting setting, int mouseX, int mouseY, boolean leftClicked){
 //        generic.drawString(stack,setting.name,x + 3,y - generic.getStringHeight(setting.name),1,1,1,1);// + (generic.getStringHeight(setting.name) / 2),1,1,1,1);
 //        Color c = setting.selected ? new Color(65, 65, 65) : new Color(50,50,50);
 //        Renderer2d.renderQuad(stack,c,x + 3,y - (generic.getStringHeight(setting.name) * 1),x2 - 3,y - (generic.getStringHeight(setting.name) * 1) + 11);
@@ -115,23 +140,28 @@ public class ClickGUIRenderer {
         int height = 0;
         int height1 = 0;
         if(setting.showOptions){
-            for(Object option : setting.value){
+            for(Object option : setting.value){ // bg
                 String strVal = String.valueOf(option);
                 height1 += generic.getStringHeight(strVal) + 2;
             }
-            Renderer2d.renderQuad(stack,new Color(20,20,20),x2,y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2),x2 + 100,y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2) + height1);
+            Renderer2d.renderQuad(stack,new Color(40,40,40),x2,y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2),x2 + 100,y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2) + height1);
+
+            //this code is so fucking shit
 
             for(Object option : setting.value){
                 String strVal = String.valueOf(option);
                 generic.drawString(stack,strVal,x2 + 3,y + (generic.getStringHeight(strVal) / 2) + height + 1,1,1,1,1);
 
-                if(leftClick && ScreenUtils.isMouseOver(mouseX,mouseY,x2,x2 + 100,y + height,y + height + generic.getStringHeight(strVal) + 2)){
-                    setting.selectedOption = option;
-                    setting.showOptions = false; // this should already be called but whatever
+                //Renderer2d.renderQuad(stack,new Color(Color.CYAN.getRed(),Color.CYAN.getGreen(),Color.CYAN.getBlue(),Color.CYAN.getAlpha() / 3),x2,y + height + 4.5,x2+100,y + height + generic.getStringHeight(strVal) + 6.5); // bounds check
+
+                if(ScreenUtils.isMouseOver(mouseX,mouseY,x2,x2 + 100f,y + height + 4.5f,y + height + generic.getStringHeight(strVal) + 6.5f)){
+                    Renderer2d.renderQuad(stack,new Color(255, 255, 255,50),x2,y + height + 4.5f,x2+100f,y + height + generic.getStringHeight(strVal) + 6.5f); // highlight
+
+                    if(leftClick)
+                        setting.selectedOption = option;
                 }
 
                 height += generic.getStringHeight(strVal) + 2;
-
 
                 if(option!=setting.value.get(setting.value.size() - 1))
                     Renderer2d.renderLine(stack, new Color(65, 65, 65), x2 + 5, y + (generic.getStringHeight(strVal) / 2) + height - 1, x2 + 96, y + (generic.getStringHeight(strVal) / 2) + height - 1);
@@ -143,6 +173,17 @@ public class ClickGUIRenderer {
         } else if(leftClick && !ScreenUtils.isMouseOver(mouseX,mouseY,x2 - 5 - generic.getStringWidth(">"),x2, y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2),y + ((generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : ""))) / 2) + 11)){
             setting.showOptions = false;
         }
+    }
+
+    static void renderButton(MatrixStack stack, int x, int y, int x1, int x2, ButtonSetting setting, int mouseX, int mouseY, boolean leftClick){
+        Color c = new Color(40,40,40);
+        if(ScreenUtils.isMouseOver(mouseX,mouseY,x1+3,x2-3,y+2,y + generic.getStringHeight(setting.name) + 2)){
+            c = new Color(85,85,85);
+            if(leftClick)
+                setting.click();
+        }
+        Renderer2d.renderQuad(stack, c, x1 + 3,y + 2,x2 - 3, y + generic.getStringHeight(setting.name) + 2);
+        generic.drawString(stack,setting.name, ((x1 + 3) + ((float) ((x2 - 3) - (x1 + 3)) / 2)) - generic.getStringWidth(setting.name) / 2,(y + 2) + (((y + 2)-(y + generic.getStringHeight(setting.name) + 2)) / 2) + generic.getStringHeight(setting.name) / 2,1,1,1,1);
     }
 
     public static void render(DrawContext context, int mouseX, int mouseY,boolean leftClicked, boolean rightClicked,int keyCode, int scanCode, int modifiers){
@@ -231,8 +272,12 @@ public class ClickGUIRenderer {
                                 height1 += (generic.getStringHeight(stringSetting.name) / 2) + 16;
                             } else if(setting instanceof SliderSetting sliderSetting){
                                 height1 += (generic.getStringHeight(sliderSetting.name)) + 8;
-                            } else if (setting instanceof EnumSetting enumSetting) {
+                            } else if (setting instanceof EnumSetting<?> enumSetting) {
                                 height1 += (generic.getStringHeight((String) (enumSetting.selectedOption != null ? enumSetting.selectedOption : "")) / 2) + 16;
+                            } else if (setting instanceof ButtonSetting buttonSetting){
+                                height1 += generic.getStringHeight(buttonSetting.name) + 4;
+                            } else if (setting instanceof LimitedStringSetting ltdStringSetting) {
+                                height1 += (generic.getStringHeight(ltdStringSetting.name) / 2) + 16;
                             }
                         }
 
@@ -294,6 +339,18 @@ public class ClickGUIRenderer {
                             } else if (setting instanceof EnumSetting<?> enumSetting) {
                                 renderDropdownSetting(fs, category.x1, (int) (category.y2 + (height + (generic.getStringHeight(setting.name) / 2) - 3)),category.x1, category.x2, enumSetting, mouseX, mouseY, leftClicked);
                                 height += (generic.getStringHeight((String) (enumSetting.selectedOption != null ? enumSetting.selectedOption : "")) / 2) + 16;
+                            } else if (setting instanceof ButtonSetting buttonSetting){
+                                renderButton(fs,category.x1,category.y2 + height,category.x1,category.x2,buttonSetting,mouseX,mouseY,leftClicked);
+                                height += generic.getStringHeight(buttonSetting.name) + 4;
+                            }else if (setting instanceof LimitedStringSetting ltdStringSetting) {
+                                renderLimitedStringSetting(fs, category.x1, (int) (category.y2 + (height + (generic.getStringHeight(setting.name) / 2) - 3)), category.x2, ltdStringSetting, mouseX, mouseY, leftClicked);
+                                if (ltdStringSetting.selected) {
+                                    isHandlingTextbox = true;
+                                    if (keyCode != -1) {
+                                        ltdStringSetting.onKey(keyCode, scanCode, modifiers);
+                                    }
+                                }
+                                height += (generic.getStringHeight(ltdStringSetting.name) / 2) + 16;
                             }
                         }
                         if(module.getSettings().size() > 0)

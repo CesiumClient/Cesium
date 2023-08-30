@@ -1,12 +1,12 @@
 package net.cesiumclient.cesium.rendering.clickgui.modules.impl.player;
 
+import net.cesiumclient.cesium.Cesium;
 import net.cesiumclient.cesium.rendering.clickgui.modules.Module;
-import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.BoolSetting;
-import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.EnumSetting;
-import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.SliderSetting;
-import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.StringSetting;
+import net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl.*;
 
 import java.util.List;
+
+
 
 public class TestModule extends Module {
     public TestModule() {
@@ -19,7 +19,13 @@ public class TestModule extends Module {
                 new SliderSetting("slider test",0.0, 0.0, -50, 50),
                 new EnumSetting<>("enum test", List.of(
                         "Test", "Test2", "Test3"
-                ))
+                )),
+                new ButtonSetting("button",TestModule::handleClick),
+                new LimitedStringSetting("limited test","test",5)
         ));
+    }
+
+    public static void handleClick(){
+        Cesium.LOGGER.info("Button Click");
     }
 }

@@ -1,21 +1,21 @@
 package net.cesiumclient.cesium.rendering.clickgui.modules.settings.impl;
 
-import net.cesiumclient.cesium.Cesium;
 import net.cesiumclient.cesium.rendering.clickgui.modules.settings.Setting;
-import net.cesiumclient.cesium.rendering.screens.ClickGUI;
-import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Objects;
 
-public class StringSetting extends Setting<String> {
+public class LimitedStringSetting extends Setting<String> {
     public boolean selected = false;
     public String lastSafeDisplayString = "";
-    public StringSetting(String name, String value) {
+    public int maxCharacters = 0;
+    public LimitedStringSetting(String name, String value, int maxCharacters) {
         super(name, value, value);
+        this.maxCharacters = maxCharacters;
     }
-    public StringSetting(String name, String value,String defaultValue) {
+    public LimitedStringSetting(String name, String value,String defaultValue, int maxCharacters) {
         super(name, value, defaultValue);
+        this.maxCharacters = maxCharacters;
     }
     public void onKey(int keyCode, int scanCode, int modifiers){
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
@@ -34,7 +34,8 @@ public class StringSetting extends Setting<String> {
         }
 
         try{
-            value = value.concat(Objects.requireNonNull(GLFW.glfwGetKeyName(keyCode, scanCode)));
+            if(value.concat(Objects.requireNonNull(GLFW.glfwGetKeyName(keyCode, scanCode))).length() <= maxCharacters)
+                value = value.concat(Objects.requireNonNull(GLFW.glfwGetKeyName(keyCode, scanCode)));
         } catch (Exception e) {
             //e.printStackTrace();
         }

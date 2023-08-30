@@ -17,4 +17,9 @@ public class EnumSetting<T> extends Setting<List<T>> {
         if(value.size() > 0)
             selectedOption = value.get(0);
     }
+    @Override
+    public void reset(){
+        if(value.size() > 0)
+            selectedOption = value.get(0);
+    }
 }
