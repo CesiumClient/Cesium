@@ -24,24 +24,30 @@ public abstract class Category {
     public int y1 = 0;
     public int y2 = 0;
 
-    public Category(String title){
+    public Category(String title) {
         this.title = title;
         this.modules = new ArrayList<>();
     }
-    public Category(String title, List<Module> modules){
+
+    public Category(String title, List<Module> modules) {
         this.title = title;
         this.modules = modules;
     }
+
     public boolean isDragFirstFrame = false;
     private int offsetX = 0;
     private int offsetY = 0;
 
-    public boolean isMouseOver(int mouseX, int mouseY){
+    public boolean isMouseOver(int mouseX, int mouseY) {
         return (mouseX > x1 && mouseX < x2) && (mouseY > y1 && mouseY < y2);
     }
 
-    public void drag(int mouseX, int mouseY){
-        if(isDragFirstFrame){
+    public void addModule(Module module){
+        modules.add(module);
+    }
+
+    public void drag(int mouseX, int mouseY) {
+        if (isDragFirstFrame) {
             offsetX = x1 - mouseX;
             offsetY = y1 - mouseY;
             isDragFirstFrame = false;
@@ -53,7 +59,7 @@ public abstract class Category {
         int width = x2 - x1;
         int height = y2 - y1;
 
-        if(mouseX + offsetX <= 5 || mouseX + offsetX >= windowWidth - 5 || mouseY + offsetY <= 5 || mouseY + offsetY >= windowHeight - 5 || mouseX + width + offsetX <= 5 || mouseX + width + offsetX >= windowWidth - 5 || mouseY + height + offsetY <= 5 || mouseY + height + offsetY >= windowHeight - 5){
+        if (mouseX + offsetX <= 5 || mouseX + offsetX >= windowWidth - 5 || mouseY + offsetY <= 5 || mouseY + offsetY >= windowHeight - 5 || mouseX + width + offsetX <= 5 || mouseX + width + offsetX >= windowWidth - 5 || mouseY + height + offsetY <= 5 || mouseY + height + offsetY >= windowHeight - 5) {
             return;
         }
 
@@ -62,7 +68,8 @@ public abstract class Category {
         y1 = mouseY + offsetY;
         y2 = mouseY + height + offsetY;
     }
-    public void enddrag(){
+
+    public void enddrag() {
         offsetX = 0;
         offsetY = 0;
         isDragFirstFrame = false;

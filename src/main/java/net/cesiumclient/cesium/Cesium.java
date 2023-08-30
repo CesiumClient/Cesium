@@ -6,6 +6,7 @@ import net.cesiumclient.cesium.registries.CategoryRegistry;
 import net.cesiumclient.cesium.rendering.clickgui.categories.impl.Addons;
 import net.cesiumclient.cesium.rendering.clickgui.categories.impl.Player;
 import net.cesiumclient.cesium.rendering.clickgui.categories.impl.Render;
+import net.cesiumclient.cesium.rendering.clickgui.categories.impl.Search;
 import net.cesiumclient.cesium.rendering.screens.ClickGUI;
 import net.cesiumclient.cesium.rendering.texture.TextureManager;
 import net.fabricmc.api.ClientModInitializer;
@@ -45,9 +46,11 @@ public class Cesium implements ClientModInitializer {
     }
     @Override
     public void onInitializeClient() {
-        CategoryRegistry.register(new Player());
-        CategoryRegistry.register(new Render());
-        CategoryRegistry.register(new Addons());
+//        CategoryRegistry.register(new Player());
+//        CategoryRegistry.register(new Render());
+//        CategoryRegistry.register(new Search());
+//        CategoryRegistry.register(new Addons());
+        CategoryRegistry.initialize();
 
         clickGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Open ClickGUI", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, "Cesium"));
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {
