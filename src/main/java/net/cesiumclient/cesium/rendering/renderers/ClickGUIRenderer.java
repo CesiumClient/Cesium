@@ -1,7 +1,5 @@
 package net.cesiumclient.cesium.rendering.renderers;
 
-import com.mojang.datafixers.kinds.Const;
-import io.netty.util.Constant;
 import me.x150.renderer.font.FontRenderer;
 import me.x150.renderer.render.Renderer2d;
 import me.x150.renderer.util.RendererUtils;
@@ -133,7 +131,7 @@ public class ClickGUIRenderer {
         Renderer2d.renderRoundedQuad(stack, new Color(255, 255, 255), sliderx1, y1, sliderx2, y2, 3, 3);
     }
 
-    static void renderDropdownSetting(MatrixStack stack, int x, int y, int x1, int x2, EnumSetting<?> setting, int mouseX, int mouseY, boolean leftClick) {
+    static void renderDropdownSetting(MatrixStack stack, int x, int y, int x1, int x2, ListSetting<?> setting, int mouseX, int mouseY, boolean leftClick) {
         generic.drawString(stack, setting.name, x + 3, y - generic.getStringHeight(setting.name) / 2, 1, 1, 1, 1);
 
         Renderer2d.renderQuad(stack, new Color(50, 50, 50), x + 3, y + (generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : "")) / 2), x2 - 3, y + ((generic.getStringHeight((String) (setting.selectedOption != null ? setting.selectedOption : ""))) / 2) + 11);
@@ -279,7 +277,7 @@ public class ClickGUIRenderer {
                                 height1 += (generic.getStringHeight(stringSetting.name) / 2) + 16;
                             } else if (setting instanceof SliderSetting sliderSetting) {
                                 height1 += (generic.getStringHeight(sliderSetting.name)) + 8;
-                            } else if (setting instanceof EnumSetting<?> enumSetting) {
+                            } else if (setting instanceof ListSetting<?> enumSetting) {
                                 height1 += (generic.getStringHeight((String) (enumSetting.selectedOption != null ? enumSetting.selectedOption : "")) / 2) + 16;
                             } else if (setting instanceof ButtonSetting buttonSetting) {
                                 height1 += generic.getStringHeight(buttonSetting.name) + 4;
@@ -356,7 +354,7 @@ public class ClickGUIRenderer {
                             } else if (setting instanceof SliderSetting sliderSetting) {
                                 renderSliderSetting(fs, category.x1, (int) (category.y2 + (height + (generic.getStringHeight(setting.name) / 2) - 3)), category.x1, category.x2, sliderSetting, mouseX, mouseY, drag);
                                 height += (generic.getStringHeight(setting.name)) + 8;
-                            } else if (setting instanceof EnumSetting<?> enumSetting) {
+                            } else if (setting instanceof ListSetting<?> enumSetting) {
                                 renderDropdownSetting(fs, category.x1, (int) (category.y2 + (height + (generic.getStringHeight(setting.name) / 2) - 3)), category.x1, category.x2, enumSetting, mouseX, mouseY, leftClicked);
                                 height += (generic.getStringHeight((String) (enumSetting.selectedOption != null ? enumSetting.selectedOption : "")) / 2) + 16;
                             } else if (setting instanceof ButtonSetting buttonSetting) {

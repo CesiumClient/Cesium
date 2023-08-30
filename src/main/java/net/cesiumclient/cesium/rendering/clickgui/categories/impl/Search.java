@@ -23,7 +23,7 @@ public class Search extends Category {
 
             for (Module module : category.getModules()) {
                 String moduleName = module.getName();
-                if (moduleName.toLowerCase().contains(search.value.toLowerCase())) {// & search.value.toLowerCase().matches(".*\\w.*")) {
+                if (moduleName.toLowerCase().contains(search.value.toLowerCase()) && search.value.toLowerCase().matches(".*\\w.*")) {
                     result.add(module);
                 }
             }

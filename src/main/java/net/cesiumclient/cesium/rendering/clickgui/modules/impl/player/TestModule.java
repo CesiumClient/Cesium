@@ -17,7 +17,7 @@ public class TestModule extends Module {
                 new StringSetting("test (again?!)", "real"),
                 new BoolSetting("test",true,true),
                 new SliderSetting("slider test",0.0, 0.0, -50, 50),
-                new EnumSetting<>("enum test", List.of(
+                new ListSetting<>("enum test", List.of(
                         "Test", "Test2", "Test3"
                 )),
                 new ButtonSetting("button",TestModule::handleClick),

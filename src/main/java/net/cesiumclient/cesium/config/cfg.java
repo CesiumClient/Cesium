@@ -6,10 +6,25 @@ import java.util.List;
 import java.util.Map;
 
 public class cfg {
+    public ConfigEntry<String> Prefix = ConfigEntry.create(".");
     public ConfigEntry<String> WindowTitle = ConfigEntry.create("Cesium Client");
     public ConfigEntry<Boolean> ShowTitleModdedStatus = ConfigEntry.create(false);
     public ConfigEntry<Boolean> ShowHUDIcon = ConfigEntry.create(true);
     public ConfigEntry<Double> CesiumHUDIconSize = ConfigEntry.create(1.0);
+
+    public  ConfigEntry<Integer> DecimalColorMain = ConfigEntry.create(2006271);
+    public  ConfigEntry<Integer> DecimalColorCommands = ConfigEntry.create(2667775);
+    public  ConfigEntry<Integer> DecimalColorCommandArgLight = ConfigEntry.create(3983615);
+    public  ConfigEntry<Integer> DecimalColorCommandArgDark = ConfigEntry.create(21621);
+    public  ConfigEntry<Integer> DecimalColorCommandError = ConfigEntry.create(16737894);
+    public  ConfigEntry<Formatting> FormattingColorMain = ConfigEntry.create(Formatting.BLUE);
+    public  ConfigEntry<Formatting> FormattingColorSecondary = ConfigEntry.create(Formatting.DARK_BLUE);
+    public  ConfigEntry<Formatting> FormattingColorMainErr = ConfigEntry.create(Formatting.RED);
+    public  ConfigEntry<Formatting> FormattingColorSecondaryErr = ConfigEntry.create(Formatting.DARK_RED);
+    public  ConfigEntry<Formatting> FormattingColorMainWrn = ConfigEntry.create(Formatting.YELLOW);
+    public  ConfigEntry<Formatting> FormattingColorSecondaryWrn = ConfigEntry.create(Formatting.GOLD);
+    public  ConfigEntry<String> ErrKey = ConfigEntry.create("ERROR");
+    public  ConfigEntry<String> WrnKey = ConfigEntry.create("WARNING");
     //config
 //    public  String Prefix = ".";
 //    public  int DecimalColorMain = 2006271;

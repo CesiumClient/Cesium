@@ -1,8 +1,11 @@
 package net.cesiumclient.cesium;
 
 import lombok.Getter;
+import net.cesiumclient.cesium.commands.LoggerCommand;
 import net.cesiumclient.cesium.config.Config;
 import net.cesiumclient.cesium.registries.CategoryRegistry;
+import net.cesiumclient.cesium.registries.CommandRegistry;
+import net.cesiumclient.cesium.registries.ModuleInitializer;
 import net.cesiumclient.cesium.rendering.clickgui.categories.impl.Addons;
 import net.cesiumclient.cesium.rendering.clickgui.categories.impl.Player;
 import net.cesiumclient.cesium.rendering.clickgui.categories.impl.Render;
@@ -51,6 +54,9 @@ public class Cesium implements ClientModInitializer {
 //        CategoryRegistry.register(new Search());
 //        CategoryRegistry.register(new Addons());
         CategoryRegistry.initialize();
+        CommandRegistry.registerCommand(new LoggerCommand());
+
+        ModuleInitializer.initialize();
 
         clickGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("Open ClickGUI", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, "Cesium"));
         ClientTickEvents.END_CLIENT_TICK.register((client) -> {

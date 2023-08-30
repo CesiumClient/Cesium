@@ -41,13 +41,13 @@ public abstract class MinecraftClientMixin {
         if (clientPlayNetworkHandler != null && clientPlayNetworkHandler.getConnection().isOpen()) {
             stringBuilder.append(" - ");
             if (this.server != null && !this.server.isRemote()) {
-                stringBuilder.append(I18n.translate("title.singleplayer", new Object[0]));
+                stringBuilder.append(I18n.translate("title.singleplayer"));
             } else if (this.isConnectedToRealms()) {
-                stringBuilder.append(I18n.translate("title.multiplayer.realms", new Object[0]));
+                stringBuilder.append(I18n.translate("title.multiplayer.realms"));
             } else if (this.server != null || this.getCurrentServerEntry() != null && this.getCurrentServerEntry().isLocal()) {
-                stringBuilder.append(I18n.translate("title.multiplayer.lan", new Object[0]));
+                stringBuilder.append(I18n.translate("title.multiplayer.lan"));
             } else {
-                stringBuilder.append(I18n.translate("title.multiplayer.other", new Object[0]));
+                stringBuilder.append(I18n.translate("title.multiplayer.other"));
             }
         }
         cir.setReturnValue(stringBuilder.toString());

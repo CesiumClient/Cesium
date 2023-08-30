@@ -6,6 +6,8 @@
   "mixins": [
   ],
   "client": [
+    "ChatInputSuggestorMixin",
+    "ClientPlayNetworkHandlerMixin",
     "ExplosionMixin",
     "TntEntityRendererMixin",
     "ParentElementMixin",

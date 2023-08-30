@@ -8,8 +8,6 @@ import java.util.List;
 
 public class Render extends Category {
     public Render() {
-        super("Render", List.of(
-                new AntiTNTLag()
-        ));
+        super("Render");
     }
 }
